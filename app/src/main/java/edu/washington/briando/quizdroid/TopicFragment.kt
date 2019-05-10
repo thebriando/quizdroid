@@ -12,20 +12,6 @@ import android.util.Log
 
 
 class TopicFragment : Fragment() {
-    private val questionMap: Map<String, Array<String>> = mapOf(
-        "math" to arrayOf<String>(
-            "3 + 5 = ?",
-            "5 * 6 = ?"
-        ),
-        "physics" to arrayOf<String>(
-            "Force = mass * ?",
-            "What is a valid way to measure energy?"
-        ),
-        "marvelSuperHeroes" to arrayOf<String>(
-            "How many Iron Man movies are there? (Excluding Avengers movies)",
-            "How many members are in the Guardians of the Galaxy?"
-        )
-    )
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         container!!.removeAllViews()
         return inflater!!.inflate(R.layout.fragment_topic, container, false)
@@ -33,14 +19,19 @@ class TopicFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val quizApp = QuizApp.defaultRepo
 
         val overview = getView()!!.findViewById<TextView>(R.id.overview)
         val numQuestions = getView()!!.findViewById<TextView>(R.id.numQuestions)
         val startBtn = getView()!!.findViewById<Button>(R.id.start)
 
         val topic = arguments!!.getString("topic")
-        val size = questionMap.get(topic)!!.size
-        var questions = questionMap[topic]
+        val descr = getView()!!.findViewById<TextView>(R.id.longDescr)
+        descr.text = quizApp.getTopicData(topic).longDescr
+
+        val size = quizApp.getQuestions(topic).size
+        var questions = quizApp.getQuestions(topic)
+        val questionNames = quizApp.getQuestionNames(questions)
 
         overview.text = topic
         numQuestions.text = "$size questions"
@@ -49,7 +40,7 @@ class TopicFragment : Fragment() {
             val fragment = QuestionFragment()
             val bundle = Bundle()
 
-            bundle.putStringArray("questions", questions)
+            bundle.putStringArrayList("questions", questionNames)
             bundle.putString("topic", topic)
             bundle.putInt("questionNum", 0)
             fragment.arguments = bundle

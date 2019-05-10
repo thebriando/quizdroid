@@ -10,48 +10,11 @@ import android.util.Log
 import java.util.*
 
 class QuestionFragment : Fragment() {
-    private lateinit var questions: Array<String>
+    private lateinit var questions: ArrayList<String>
     private var questionNum = 0
     private var numCorrectAns = 0
     private var correctAns = ""
-    private val answerKey = mapOf(
-        "3 + 5 = ?" to arrayOf(
-            "8",
-            "2",
-            "3",
-            "4"
-        ),
-        "5 * 6 = ?" to arrayOf(
-            "30",
-            "56",
-            "45",
-            "22"
-        ),
-        "Force = mass * ?" to arrayOf(
-            "acceleration",
-            "velocity",
-            "speed",
-            "time"
-        ),
-        "What is a valid way to measure energy?" to arrayOf(
-            "joules",
-            "inches",
-            "centimeters",
-            "feet"
-        ),
-        "How many Iron Man movies are there? (Excluding Avengers movies)" to arrayOf(
-            "3",
-            "2",
-            "1",
-            "5"
-        ),
-        "How many members are in the Guardians of the Galaxy?" to arrayOf(
-            "6",
-            "4",
-            "3",
-            "2"
-        )
-    )
+    private lateinit var answerKey: Array<Question>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         container!!.removeAllViews()
@@ -61,13 +24,15 @@ class QuestionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val submitButton = getView()!!.findViewById<Button>(R.id.submit)
+        val topic = arguments!!.getString("topic")
+        answerKey = QuizApp.defaultRepo.getQuestions(topic)
         submitButton.setEnabled(false)
 
-        questions = arguments!!.getStringArray("questions")
+        questions = arguments!!.getStringArrayList("questions")
         questionNum = arguments!!.getInt("questionNum")
         numCorrectAns = arguments!!.getInt("numCorrectAns")
         val currentQuestion = questions[questionNum]
-        correctAns = answerKey.get(currentQuestion)!![0]
+        correctAns = (answerKey[questionNum].answers)[0]
 
         this.getAnswers(questions)
 
@@ -82,9 +47,10 @@ class QuestionFragment : Fragment() {
                 numCorrectAns++
             }
             bundle.putString("correctAns", correctAns)
+            bundle.putString("topic", topic)
             val userAnswer = btn.text.toString()
 
-            bundle.putStringArray("questions", questions)
+            bundle.putStringArrayList("questions", questions)
             bundle.putInt("numCorrectAns", numCorrectAns)
             bundle.putInt("questionNum", questionNum)
             bundle.putString("userAnswer", userAnswer)
@@ -97,10 +63,13 @@ class QuestionFragment : Fragment() {
         }
     }
 
-    private fun getAnswers(questions: Array<String>) {
+    private fun getAnswers(questions: ArrayList<String>) {
         val question = questions[questionNum]
 
-        val ans = answerKey.get(question)
+        answerKey = QuizApp.defaultRepo.getQuestions(arguments!!.getString("topic"))
+
+//        val ans = answerKey.get(question)
+        val ans = (answerKey[questionNum].answers)
 
         val currentTitle = getView()!!.findViewById<TextView>(R.id.question)
         currentTitle.text = question

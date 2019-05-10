@@ -11,39 +11,41 @@
             android:layout_width="395dp"
             android:gravity="center"
             android:layout_height="0dp" android:id="@+id/overview"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            app:layout_constraintHorizontal_bias="0.5" android:layout_marginBottom="114dp"
-            app:layout_constraintBottom_toTopOf="@+id/multipleChoice" app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="295dp"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="232dp" android:layout_marginBottom="26dp"
+            app:layout_constraintBottom_toTopOf="@+id/longDescr"/>
     <TextView
             android:text="Questions"
             android:gravity="center"
-            android:layout_width="395dp"
-            android:layout_height="32dp" android:id="@+id/numQuestions"
+            android:layout_width="0dp"
+            android:layout_height="0dp" android:id="@+id/numQuestions"
+            app:layout_constraintTop_toBottomOf="@+id/longDescr" android:layout_marginBottom="47dp"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toTopOf="@+id/multipleChoice"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            app:layout_constraintHorizontal_bias="0.5" android:layout_marginBottom="164dp"
-            app:layout_constraintBottom_toTopOf="@+id/start"/>
+            android:layout_marginStart="8dp" android:layout_marginEnd="8dp" android:layout_marginRight="8dp"/>
     <Button
             android:text="begin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/start"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp" android:layout_marginBottom="124dp"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="0.5"
-    />
+            app:layout_constraintStart_toStartOf="@+id/multipleChoice" android:layout_marginLeft="5dp"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginStart="5dp"
+            app:layout_constraintTop_toBottomOf="@+id/multipleChoice" android:layout_marginBottom="124dp"/>
     <TextView
             android:text="Multiple Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/multipleChoice" app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toBottomOf="@+id/overview"
-            android:layout_marginBottom="271dp"/>
+            android:id="@+id/multipleChoice"
+            app:layout_constraintTop_toBottomOf="@+id/numQuestions" android:layout_marginBottom="98dp"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toTopOf="@+id/start"
+            app:layout_constraintStart_toStartOf="parent"/>
+    <TextView
+            android:gravity="center"
+            android:text="Description"
+            android:layout_width="395dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/longDescr" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/overview"
+            android:layout_marginBottom="53dp" app:layout_constraintBottom_toTopOf="@+id/numQuestions"/>
 </android.support.constraint.ConstraintLayout>

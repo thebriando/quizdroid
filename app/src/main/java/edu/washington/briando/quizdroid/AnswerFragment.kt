@@ -25,8 +25,8 @@ class AnswerFragment : Fragment() {
         val score = getView()!!.findViewById<TextView>(R.id.userCorrect)
         val button = getView()!!.findViewById<Button>(R.id.next)
 
-        val questions = arguments!!.getStringArray("questions")
-
+        val questions = arguments!!.getStringArrayList("questions")
+        val topic = arguments!!.getString("topic")
         val questionNum =  arguments!!.getInt("questionNum")
         val numCorrectAns =  arguments!!.getInt("numCorrectAns")
         val userAnswer =  arguments!!.getString("userAnswer")
@@ -52,7 +52,8 @@ class AnswerFragment : Fragment() {
                 val fragment = QuestionFragment()
 
                 val bundle = Bundle()
-                bundle.putStringArray("questions", questions)
+                bundle.putString("topic", topic)
+                bundle.putStringArrayList("questions", questions)
                 bundle.putInt("questionNum", questionNum + 1)
                 bundle.putInt("numCorrectAns", numCorrectAns)
 

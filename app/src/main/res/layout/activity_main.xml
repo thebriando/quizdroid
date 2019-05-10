@@ -8,30 +8,65 @@
         tools:context=".MainActivity">
     <Button
             android:text="MATH"
-            android:layout_width="395dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content" android:id="@+id/math"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toTopOf="@+id/physics"/>
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/mathDescr" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="8dp" android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp" app:layout_constraintEnd_toEndOf="parent"/>
     <Button
             android:text="PHYSICS"
-            android:layout_width="395dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/physics"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"/>
+            android:layout_marginBottom="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/physicsDescr" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="8dp" android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp" app:layout_constraintEnd_toEndOf="parent"/>
     <Button
             android:text="Marvel Super Heroes"
-            android:layout_width="395dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/marvelSuperHeroes"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/physics"/>
+            android:layout_marginBottom="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/marvelSuperHeroesDescr" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="8dp" android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp" app:layout_constraintEnd_toEndOf="parent"/>
     <TextView
             android:gravity="center"
             android:text="Choose a Topic"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="44dp"
+            app:layout_constraintBottom_toTopOf="@+id/math" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="8dp" android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"/>
+    <TextView
+            android:gravity="center"
+            android:text="Math descr"
             android:layout_width="395dp"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/textView" android:layout_marginBottom="39dp"
-            app:layout_constraintBottom_toTopOf="@+id/math"/>
+            android:id="@+id/mathDescr"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginBottom="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/physics"/>
+    <TextView
+            android:gravity="center"
+            android:text="Physics descr"
+            android:layout_width="395dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/physicsDescr"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginBottom="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/marvelSuperHeroes"/>
+    <TextView
+            android:gravity="center"
+            android:text="marvelDescr"
+            android:layout_width="395dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/marvelSuperHeroesDescr"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="206dp"/>
 </android.support.constraint.ConstraintLayout>
