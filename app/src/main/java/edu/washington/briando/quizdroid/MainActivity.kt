@@ -9,7 +9,6 @@ import android.view.*
 
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var topicList: ListView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,16 +16,16 @@ class MainActivity : AppCompatActivity() {
         val quizApp = QuizApp.defaultRepo
 //        var topicArray = quizApp.getTopics()
 
-        this.topicList = findViewById(R.id.topicList)
+        val topicListView = findViewById<ListView>(R.id.topicList)
 
         val topics = quizApp.getTopics()
-        val itemList : ArrayAdapter<String> = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, topics)
-        this.topicList.adapter = itemList
+        val itemList : ArrayAdapter<String> = ArrayAdapter(this@MainActivity, android.R.layout.simple_expandable_list_item_1, topics)
+        topicListView.adapter = itemList
 
-        this.topicList.onItemClickListener = object : AdapterView.OnItemClickListener {
+        topicListView.onItemClickListener = object : AdapterView.OnItemClickListener {
             override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val intent = Intent(this@MainActivity, QuizActivity::class.java)
-                intent.putExtra("topic", topicList.getItemAtPosition(position).toString())
+                intent.putExtra("topic", topicListView.getItemAtPosition(position).toString())
                 startActivity(intent)
             }
         }
