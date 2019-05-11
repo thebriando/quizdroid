@@ -6,67 +6,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
-    <Button
-            android:text="MATH"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" android:id="@+id/math"
-            android:layout_marginBottom="4dp"
-            app:layout_constraintBottom_toTopOf="@+id/mathDescr" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginLeft="8dp" android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp" app:layout_constraintEnd_toEndOf="parent"/>
-    <Button
-            android:text="PHYSICS"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/physics"
-            android:layout_marginBottom="5dp"
-            app:layout_constraintBottom_toTopOf="@+id/physicsDescr" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginLeft="8dp" android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp" app:layout_constraintEnd_toEndOf="parent"/>
-    <Button
-            android:text="Marvel Super Heroes"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/marvelSuperHeroes"
-            android:layout_marginBottom="5dp"
-            app:layout_constraintBottom_toTopOf="@+id/marvelSuperHeroesDescr" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginLeft="8dp" android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp" app:layout_constraintEnd_toEndOf="parent"/>
-    <TextView
-            android:gravity="center"
-            android:text="Choose a Topic"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="44dp"
-            app:layout_constraintBottom_toTopOf="@+id/math" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginLeft="8dp" android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"/>
-    <TextView
-            android:gravity="center"
-            android:text="Math descr"
-            android:layout_width="395dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/mathDescr"
+
+    <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginBottom="5dp"
-            app:layout_constraintBottom_toTopOf="@+id/physics"/>
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/topicList"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintVertical_bias="0.681" app:layout_constraintTop_toBottomOf="@+id/topicHeader"
+            android:layout_marginBottom="29dp">
+    </ListView>
     <TextView
             android:gravity="center"
-            android:text="Physics descr"
-            android:layout_width="395dp"
+            android:text="Choose a topic"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/physicsDescr"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginBottom="5dp"
-            app:layout_constraintBottom_toTopOf="@+id/marvelSuperHeroes"/>
-    <TextView
-            android:gravity="center"
-            android:text="marvelDescr"
-            android:layout_width="395dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/marvelSuperHeroesDescr"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="206dp"/>
+            android:id="@+id/topicHeader"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toTopOf="@+id/topicList"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="8dp" android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp" android:textSize="22sp"/>
 </android.support.constraint.ConstraintLayout>

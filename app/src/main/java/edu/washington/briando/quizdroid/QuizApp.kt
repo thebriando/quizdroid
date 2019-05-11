@@ -2,6 +2,14 @@ package edu.washington.briando.quizdroid
 
 import android.util.Log
 import android.app.Application
+import android.os.Environment
+import android.content.Context
+import org.json.*
+import java.io.File
+import java.util.*
+import java.io.*
+
+import kotlin.NoSuchElementException
 
 private const val TAG: String = "QuizDroid"
 
@@ -15,11 +23,32 @@ interface TopicRepository {
     fun getTopic(index: Int): Topic
     fun getQuestions(topic: String): Array<Question>
     fun getQuestionNames(questions: Array<Question>): ArrayList<String>
-    fun getShortDescr(): ArrayList<String>
 }
 
 class DefaultRepository : TopicRepository {
     private val repository = arrayListOf<Topic>()
+
+    fun fillFromJson(data: JSONArray) {
+        for (i in 0..data.length()-1) {
+            val topic = data.getJSONObject(i)
+            val title = topic.getString("title")
+            val desc = topic.getString("desc")
+            val questions = topic.getJSONArray("questions")
+            val data = ArrayList<Question>()
+            for (j in 0..questions.length()-1) {
+                val jsonObj = questions.getJSONObject(j)
+                val text = jsonObj.getString("text")
+                val correctAns = jsonObj.getInt("answer") - 1
+                val answers = jsonObj.getJSONArray("answers")
+                val repoAnswers = ArrayList<String>()
+                for (k in 0..answers.length()-1) {
+                    repoAnswers.add(answers[k].toString())
+                }
+                data.add(Question(text, repoAnswers.toTypedArray(), correctAns))
+            }
+            repository.add(Topic(title, desc, desc, data.toTypedArray()))
+        }
+    }
 
     override fun fillData() {
         val question1 = Question("3 + 5 = ?", arrayOf("8", "2", "3", "4"), 0)
@@ -70,14 +99,6 @@ class DefaultRepository : TopicRepository {
         return repository
     }
 
-    override fun getShortDescr(): ArrayList<String> {
-        var descriptions = arrayListOf<String>()
-        for (topic in repository) {
-            descriptions.add(topic.shortDescr)
-        }
-        return descriptions
-    }
-
     override fun getTopics(): ArrayList<String> {
         var topics = arrayListOf<String>()
         for (topic in repository) {
@@ -115,18 +136,44 @@ class DefaultRepository : TopicRepository {
         }
         throw NoSuchElementException()
     }
+
+    fun getCorrectAns(topic: String, questionNum: Int): Int {
+        return getTopicData(topic).questions[questionNum].correctAns
+    }
 }
 
 class QuizApp : Application() {
+    private lateinit var data: JSONArray
+    private lateinit var defaultRepo: TopicRepository
+
     override fun onCreate() {
         super.onCreate()
         Log.i(TAG, "QuizApp loaded")
+        val jsonString: String? = try {
+            val inputStream = assets.open("questions.json")
+            val size = inputStream.available()
+            val buffer = ByteArray(size)
+            inputStream.read(buffer)
+            inputStream.close()
+
+            String(buffer, Charsets.UTF_8)
+        } catch (e: IOException) {
+            null
+        }
+
+        jsonString?.let {
+            val jsonData = JSONArray(jsonString)
+            data = jsonData
+        }
+        defaultRepo = DefaultRepository()
+        QuizApp.defaultRepo.fillFromJson(data)
     }
 
     companion object {
         val defaultRepo = DefaultRepository()
         init {
-            defaultRepo.fillData()
+//            defaultRepo.fillData()
+//            defaultRepo.fillFromJson(data)
         }
     }
 }

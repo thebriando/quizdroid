@@ -32,7 +32,7 @@ class QuestionFragment : Fragment() {
         questionNum = arguments!!.getInt("questionNum")
         numCorrectAns = arguments!!.getInt("numCorrectAns")
         val currentQuestion = questions[questionNum]
-        correctAns = (answerKey[questionNum].answers)[0]
+        correctAns = (answerKey[questionNum].answers)[QuizApp.defaultRepo.getCorrectAns(topic, questionNum)]
 
         this.getAnswers(questions)
 
@@ -74,14 +74,8 @@ class QuestionFragment : Fragment() {
         val currentTitle = getView()!!.findViewById<TextView>(R.id.question)
         currentTitle.text = question
 
-        var options: Set<Int> = setOf(5)
         for (i in 0..3) {
-            var position = 5
-            while (options.contains(position)) {
-                position = (0..3).random()
-            }
-            options = options.plus(position)
-            val id = resources.getIdentifier("ans$position", "id", getActivity()!!.getPackageName())
+            val id = resources.getIdentifier("ans$i", "id", getActivity()!!.getPackageName())
             val btn = getView()!!.findViewById<RadioButton>(id)
             btn.text = ans!![i]
             btn.setOnClickListener {
