@@ -17,7 +17,7 @@ import java.net.URL
 class AlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        context?.deleteFile("questions.json")
+//        context?.deleteFile("questions.json")
         Log.d("QuizDroid", "in receiver")
         val url = intent?.getStringExtra("jsonUrl")
         downloadFile().execute(url)
@@ -27,6 +27,8 @@ class AlarmReceiver : BroadcastReceiver() {
         override fun doInBackground(vararg url: String?): String {
             val read: String
             val cnxn = URL(url[0]).openConnection() as HttpURLConnection
+
+
             try {
                 cnxn.connect()
                 read = cnxn.inputStream.use { it.reader().use { reader -> reader.readText() } }
@@ -50,9 +52,9 @@ class AlarmReceiver : BroadcastReceiver() {
             }
             val file = File(directory, "questions.json")
 
-            val out = PrintWriter(FileWriter(file, true))
-            out.println(jsonString)
-            out.close()
+            val printWriter = PrintWriter(FileWriter(file, true))
+            printWriter.println(jsonString)
+            printWriter.close()
         } catch (ioe: IOException) {
             ioe.printStackTrace()
         }

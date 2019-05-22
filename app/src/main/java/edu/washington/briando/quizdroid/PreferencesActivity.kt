@@ -40,6 +40,7 @@ class PreferencesActivity : AppCompatActivity() {
         val receiver = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val pending : PendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         val interval: Long
+
         when (spinner.selectedItem.toString()) {
             "1 min" -> interval = 60000
             "5 min" -> interval = 5 * 60000
