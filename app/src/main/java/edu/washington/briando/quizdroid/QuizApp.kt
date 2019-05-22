@@ -4,12 +4,16 @@ import android.util.Log
 import android.app.Application
 import android.os.Environment
 import android.content.Context
+import android.content.Intent
+import android.support.annotation.MainThread
+import android.util.JsonReader
 import org.json.*
 import java.io.File
 import java.util.*
 import java.io.*
 
 import kotlin.NoSuchElementException
+import kotlin.random.Random
 
 private const val TAG: String = "QuizDroid"
 
@@ -23,6 +27,7 @@ interface TopicRepository {
     fun getTopic(index: Int): Topic
     fun getQuestions(topic: String): Array<Question>
     fun getQuestionNames(questions: Array<Question>): ArrayList<String>
+    fun setup()
 }
 
 class DefaultRepository : TopicRepository {
@@ -140,6 +145,32 @@ class DefaultRepository : TopicRepository {
     fun getCorrectAns(topic: String, questionNum: Int): Int {
         return getTopicData(topic).questions[questionNum].correctAns
     }
+
+    override fun setup() {
+        val json = getFile()
+        Log.d(TAG, "setting up")
+        Log.d(TAG, "$json")
+        if (json == null) {
+            fillData()
+        } else {
+            Log.d(TAG, "filling json")
+            fillFromJson(JSONArray(json))
+        }
+    }
+
+    private fun getFile(): String? {
+        val data : String?
+        val directory = Environment.getExternalStorageDirectory()
+
+        try {
+            val file = File(directory, "questions.json")
+            data = BufferedInputStream(file.inputStream()).use { it.reader().use { reader -> reader.readText() } }
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            return null
+        }
+        return data
+    }
 }
 
 class QuizApp : Application() {
@@ -149,28 +180,16 @@ class QuizApp : Application() {
     override fun onCreate() {
         super.onCreate()
         Log.i(TAG, "QuizApp loaded")
-        val jsonString: String? = try {
-            val inputStream = assets.open("questions.json")
-            val size = inputStream.available()
-            val buffer = ByteArray(size)
-            inputStream.read(buffer)
-            inputStream.close()
-
-            String(buffer, Charsets.UTF_8)
-        } catch (e: IOException) {
-            null
-        }
-
-        jsonString?.let {
-            val jsonData = JSONArray(jsonString)
-            data = jsonData
-        }
         defaultRepo = DefaultRepository()
-        QuizApp.defaultRepo.fillFromJson(data)
+        Log.d(TAG, defaultRepo.getTopics().toString())
     }
 
     companion object {
         val defaultRepo = DefaultRepository()
+
+        fun initSetup() {
+            defaultRepo.setup()
+        }
         init {
 //            defaultRepo.fillData()
 //            defaultRepo.fillFromJson(data)
